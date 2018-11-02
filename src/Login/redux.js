@@ -11,7 +11,7 @@ export default (state = inititalState, action) => {
 }
 
 //action generator
-export const setFormData = (key, value) => {
+export const onLogIn = (key, value) => {
     return {
         type: "SET_FORM_DATA",
         key: key,
