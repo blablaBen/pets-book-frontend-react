@@ -1,20 +1,35 @@
 const inititalState = {
-
+    username: "",
+    password: ""
 };
 
 //reducer
 export default (state = inititalState, action) => {
     switch (action.type) {
+        case SET_FORM_DATA:
+            return {
+                ...state,
+                [action.key]: action.value
+            };
+
         default:
             return state;
     }
 }
 
 //action generator
-export const onLogIn = (key, value) => {
+const ON_LOG_IN = "ON_LOG_IN";
+export const onLogIn = () => {
     return {
-        type: "SET_FORM_DATA",
-        key: key,
-        value: value
+        type: ON_LOG_IN
     };
 };
+
+const SET_FORM_DATA = "SET_FORM_DATA";
+export const onDataChange = (key, value) => {
+    return {
+        type: SET_FORM_DATA,
+        key: key,
+        value: value
+    }
+}
