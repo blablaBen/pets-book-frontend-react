@@ -1,0 +1,37 @@
+.container-fluid {
+ background-color: #cf142b;
+}
+
+.login-container {
+    border: 1px solid #afa3a3;
+    padding: 15px;
+    padding-bottom: 25px;
+    background-color: white;
+
+    webkit-box-shadow: 0 6pt 25pt 15pt rgba(25, 24, 24, 0.25);
+    box-shadow: 0 6pt 25pt 15pt rgba(25, 24, 24, 0.25);
+    border-radius: 3px;
+}
+
+.login-container .col-12 {
+    margin-top:15px;
+}
+
+.login-container .name {
+    text-align: center;
+    font-size: 50px;
+}
+
+.login-container .col-12:last-child {
+    margin-bottom:30px;
+}
+
+.login-container button {
+    color: #e0001f;
+    border-color: #e0001f;
+}
+
+.login-container button:hover {
+    background-color: #e0001f;
+    border-color: #e0001f;
+}
