@@ -1,17 +1,25 @@
 import React, {Component} from "react";
 import { connect } from "react-redux";
 import {onLogIn, onDataChange} from './redux';
+import { onLogInSuccess } from '../User/action';
+
+import {withRouter} from 'react-router';
 import './Login.css';
 
 import { InputGroup, InputGroupAddon, Input, Button } from 'reactstrap';
 
 class Login extends Component {
+    onLogIn = () => {
+        const {username} = this.props;
+        this.props.onLogInSuccess('xxxxx', username);
+        this.props.history.push('/feed');
+    }
 
     render() {
         const {username, password} = this.props;
         return (
-            <div class="container-fluid h-100">
-                <div class="row h-100 align-items-center">
+            <div className="container-fluid h-100">
+                <div className="row h-100 align-items-center">
                     <div className="col-12">
                         <div className="row justify-content-center">
                             <div className="col-4 login-container">
@@ -36,7 +44,7 @@ class Login extends Component {
                                     </InputGroup>
                                 </div>
                                 <div className="col-12 login-input">
-                                    <Button outline color="primary" block>Login</Button>{' '}
+                                    <Button outline color="primary" block onClick={this.onLogIn}>Login</Button>{' '}
                                 </div>
                             </div>
                         </div>
@@ -53,8 +61,9 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    onLogIn: (key, value) => dispatch(onLogIn(key, value)),
-    onChange: (key,value) => dispatch(onDataChange(key, value))
+    onLogIn: () => dispatch(onLogIn()),
+    onChange: (key,value) => dispatch(onDataChange(key, value)),
+    onLogInSuccess: (jwt, username) => dispatch(onLogInSuccess(jwt, username))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Login));
