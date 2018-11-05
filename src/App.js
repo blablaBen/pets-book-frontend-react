@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 import './App.css';
 
 import Login from './Login/Login'
-import Feed from './Feed/Feed'
+import AfterLogin from './AfterLogin/AfterLogin'
 import { PrivateRoute } from './Components/PrivateRoute';
 
 class App extends Component {
@@ -15,7 +15,7 @@ class App extends Component {
       <div>
         <Switch>
           <Route exact path="/login" component={Login} />
-          <PrivateRoute path="/feed" isLoggedIn={isLoggedIn} component={Feed} />
+          <PrivateRoute path="/afterLogin" isLoggedIn={isLoggedIn} component={AfterLogin} />
           <Redirect exact from="/" to="/login" />
         </Switch>
       </div>

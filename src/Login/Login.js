@@ -12,7 +12,7 @@ class Login extends Component {
     onLogIn = () => {
         const {username} = this.props;
         this.props.onLogInSuccess('xxxxx', username);
-        this.props.history.push('/feed');
+        this.props.history.push('/afterLogin');
     }
 
     render() {
