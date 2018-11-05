@@ -15,7 +15,8 @@ class App extends Component {
       <div>
         <Switch>
           <Route exact path="/login" component={Login} />
-          <PrivateRoute path="/afterLogin" isLoggedIn={isLoggedIn} component={AfterLogin} />
+          <Route path="/afterLogin" component={AfterLogin} />
+          {/* <PrivateRoute path="/afterLogin" isLoggedIn={isLoggedIn} component={AfterLogin} /> */}
           <Redirect exact from="/" to="/login" />
         </Switch>
       </div>
