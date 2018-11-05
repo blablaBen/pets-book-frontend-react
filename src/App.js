@@ -10,12 +10,12 @@ import { PrivateRoute } from './Components/PrivateRoute';
 
 class App extends Component {
   render() {
-    const {isAuthenthicated} = this.props;
+    const {isLoggedIn} = this.props;
     return (
       <div>
         <Switch>
           <Route exact path="/login" component={Login} />
-          <PrivateRoute path="/feed" isAuthenthicated={isAuthenthicated} component={Feed} />
+          <PrivateRoute path="/feed" isLoggedIn={isLoggedIn} component={Feed} />
           <Redirect exact from="/" to="/login" />
         </Switch>
       </div>
@@ -24,7 +24,7 @@ class App extends Component {
 }
 
 const mapStateToProps = state => ({
-  isAuthenthicated: state.user.isAuthenthicated
+  isLoggedIn: state.user.isLoggedIn
 });
 
 const mapDispatchToProps = dispatch => ({
