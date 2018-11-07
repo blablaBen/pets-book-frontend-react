@@ -34,7 +34,7 @@ export default class Feed extends Component {
         const {postItems} = this.state;
         return (
             <FeedContainer>
-                <div className="col-6">
+                <div className="col-8">
                     {
                         postItems.map((post, index) => {
                           return <Post key={index} item={post} /> 
