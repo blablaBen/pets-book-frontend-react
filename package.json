@@ -2,6 +2,7 @@
   "name": "petsbook",
   "version": "0.1.0",
   "private": true,
+  "homepage": "./",
   "dependencies": {
     "axios": "^0.18.0",
     "bootstrap": "^4.1.3",
@@ -22,7 +23,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deploy": "npm run build && mv ./build/* ./public && node_modules/.bin/http-server -p 8081"
+    "deploy": "npm run build && rm -rf ./public/* && mv ./build/* ./public && node_modules/.bin/http-server -p 8081"
   },
   "eslintConfig": {
     "extends": "react-app"
