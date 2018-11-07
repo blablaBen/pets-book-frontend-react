@@ -6,7 +6,7 @@ import './App.css';
 
 import Login from './Login/Login'
 import AfterLogin from './AfterLogin/AfterLogin'
-import { PrivateRoute } from './Components/PrivateRoute';
+import PrivateRoute  from './Components/PrivateRoute';
 
 class App extends Component {
   render() {

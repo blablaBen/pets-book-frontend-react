@@ -12,7 +12,8 @@ import {
     Input
 } from 'reactstrap';
 import {FEED_URL, INTEREST_URL, ASK_URL, INBOX_URL, PROFILE_URL} from "../Const/URLConstant";
-import {Switch, Route} from 'react-router-dom';
+import {Switch} from 'react-router-dom';
+import PrivateRoute from '../Components/PrivateRoute';
 import styled from 'styled-components';
 import Feed from '../Feed/Feed';
 
@@ -70,7 +71,7 @@ export default class AfterLogin extends Component {
                 </Navbar>
                 <Container>
                     <Switch>
-                        <Route path={FEED_URL} component={Feed} />
+                        <PrivateRoute path={FEED_URL} component={Feed} />
                     </Switch>
                 </Container>
             </div>
