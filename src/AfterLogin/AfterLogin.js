@@ -12,6 +12,16 @@ import {
     Input
 } from 'reactstrap';
 import {FEED_URL, INTEREST_URL, ASK_URL, INBOX_URL, PROFILE_URL} from "../Const/URLConstant";
+import {Switch, Route} from 'react-router-dom';
+import styled from 'styled-components';
+import Feed from '../Feed/Feed';
+
+const Container = styled.div.attrs({
+    className: "container-fluid"
+})`
+
+`
+
 
 export default class AfterLogin extends Component {
     constructor(props) {
@@ -58,6 +68,11 @@ export default class AfterLogin extends Component {
                         </Nav>
                     </Collapse>
                 </Navbar>
+                <Container>
+                    <Switch>
+                        <Route path={FEED_URL} component={Feed} />
+                    </Switch>
+                </Container>
             </div>
         );
     }
