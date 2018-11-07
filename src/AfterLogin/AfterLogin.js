@@ -18,7 +18,7 @@ import styled from 'styled-components';
 import Feed from '../Feed/Feed';
 
 const Container = styled.div.attrs({
-    className: "container-fluid"
+    className: "container"
 })`
 
 `
