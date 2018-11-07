@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import "./Feed.css";
 import styled from 'styled-components';
 import Post from './Components/Post';
+import {connect} from 'react-redux';
+import {updateFeed} from './action';
 
 const FeedContainer = styled.div.attrs({
     className: "row justify-content-center"
@@ -9,7 +11,7 @@ const FeedContainer = styled.div.attrs({
 
 `;
 
-export default class Feed extends Component {
+class Feed extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -28,15 +30,17 @@ export default class Feed extends Component {
             "textValue": "Hi!, this is my first status",
             "userId": "5bde471d69c4f1059d4f5365"
         }]})
+        this.props.loadFeed();
     }
 
     render() {
-        const {postItems} = this.state;
+        const {posts} = this.props;
+        console.log(posts);
         return (
             <FeedContainer>
                 <div className="col-8">
                     {
-                        postItems.map((post, index) => {
+                        posts.map((post, index) => {
                           return <Post key={index} item={post} /> 
                         })
                     }
@@ -45,3 +49,13 @@ export default class Feed extends Component {
         );
     }
 }
+
+const mapStateToProps = state => ({
+    posts: state.feed.posts
+});
+
+const mapActionToProps = dispatch => ({
+    loadFeed: () => dispatch(updateFeed())
+});
+
+export default connect(mapStateToProps, mapActionToProps)(Feed);

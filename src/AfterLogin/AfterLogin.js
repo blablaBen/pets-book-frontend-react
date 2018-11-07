@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import {connect} from 'react-redux';
+import {withRouter} from 'react-router-dom';
 import './AfterLogin.css';
 
 import {
@@ -24,7 +26,7 @@ const Container = styled.div.attrs({
 `
 
 
-export default class AfterLogin extends Component {
+class AfterLogin extends Component {
     constructor(props) {
         super(props);
 
@@ -79,3 +81,13 @@ export default class AfterLogin extends Component {
         );
     }
 }
+
+const mapStateToProps = state => ({
+
+});
+
+const mapActionToProps = dispatch => ({
+
+});
+
+export default withRouter(connect(mapStateToProps, mapActionToProps)(AfterLogin))
