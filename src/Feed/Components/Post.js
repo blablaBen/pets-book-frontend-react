@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
-
+import PropTypes from 'prop-types';
 
 const PostContainer = styled.div.attrs({
     className: "col-12"
@@ -17,7 +17,7 @@ const PostContent = styled.div.attrs({
     border-bottom: 1px solid #ccc9c9;
 `
 
-export default class Post extends Component {
+class Post extends Component {
     constructor(props) {
         super(props);
     }
@@ -48,3 +48,13 @@ export default class Post extends Component {
         );
     }
 }
+
+Post.propTypes = {
+    item: PropTypes.shape({
+        userId: PropTypes.string.isRequired,
+        textValue: PropTypes.string.isRequired,
+        pictures: PropTypes.arrayOf(PropTypes.string).isRequired
+    })
+}
+
+export default Post
