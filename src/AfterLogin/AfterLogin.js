@@ -12,7 +12,7 @@ import {
     Input
 } from 'reactstrap';
 import {FEED_URL, INTEREST_URL, ASK_URL, INBOX_URL, PROFILE_URL} from "../Const/URLConstant";
-import {Switch} from 'react-router-dom';
+import {Switch, Redirect} from 'react-router-dom';
 import PrivateRoute from '../Components/PrivateRoute';
 import styled from 'styled-components';
 import Feed from '../Feed/Feed';
@@ -72,6 +72,7 @@ export default class AfterLogin extends Component {
                 <Container>
                     <Switch>
                         <PrivateRoute path={FEED_URL} component={Feed} />
+                        <Redirect exact from="/afterLogin" to={FEED_URL} />
                     </Switch>
                 </Container>
             </div>

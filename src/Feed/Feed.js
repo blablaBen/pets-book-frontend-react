@@ -23,7 +23,7 @@ export default class Feed extends Component {
             "date": "2018-11-06 12:54AM",
             "id": "5be156cd964ac4092a64f6db",
             "pictures": [
-                "www.xx.yyy"
+                "https://i.kinja-img.com/gawker-media/image/upload/s--WFkXeene--/c_scale,f_auto,fl_progressive,q_80,w_800/ol9ceoqxidudap8owlwn.jpg"
             ],
             "textValue": "Hi!, this is my first status",
             "userId": "5bde471d69c4f1059d4f5365"
