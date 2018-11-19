@@ -17,7 +17,8 @@ class Feed extends Component {
     }
 
     componentWillMount() {
-        this.props.loadFeed();
+        const {jwt} = this.props;
+        this.props.loadFeed(jwt);
     }
 
     render() {
@@ -37,11 +38,12 @@ class Feed extends Component {
 }
 
 const mapStateToProps = state => ({
-    posts: state.feed.posts
+    posts: state.feed.posts,
+    jwt: state.user.jwt
 });
 
 const mapActionToProps = dispatch => ({
-    loadFeed: () => dispatch(updateFeed())
+    loadFeed: (jwt) => dispatch(updateFeed(jwt))
 });
 
 export default connect(mapStateToProps, mapActionToProps)(Feed);

@@ -2,6 +2,8 @@ import React, {Component} from "react";
 import { connect } from "react-redux";
 import {onLogIn, onDataChange} from './redux';
 import { onLogInSuccess } from '../User/action';
+import axios from "axios";
+import {HOST} from '../Const/URLConstant';
 
 import {withRouter} from 'react-router';
 import './Login.css';
@@ -31,9 +33,17 @@ const LoginContainer = styled.div.attrs({
 
 class Login extends Component {
     onLogIn = () => {
-        const {username} = this.props;
-        this.props.onLogInSuccess('xxxxx', username);
-        this.props.history.push('/afterLogin');
+        const {username, password} = this.props;
+        console.log(`${username} ${password}`);
+        axios.post(`${HOST}/sessions`, {
+            'email': username,
+            'password': password
+        }).then((response) => {
+            this.props.onLogInSuccess(response.data.data.token, response.data.data.profileName);
+            this.props.history.push('/afterLogin');
+        }, (error) => {
+            alert(`Error!: ${error.response.data.errorMessage}`);
+        });
     }
 
     render() {
@@ -50,7 +60,7 @@ class Login extends Component {
                                         <InputGroupAddon addonType="prepend">@</InputGroupAddon>
                                         <Input placeholder="username" value={username} onChange={
                                             e => {
-                                                this.props.onChange("username", e.value)
+                                                this.props.onChange("username", e.target.value)
                                             }
                                         }/>
                                     </InputGroup>
@@ -59,7 +69,7 @@ class Login extends Component {
                                     <InputGroup>
                                         <Input placeholder="password" value={password} type="password" onChange={
                                             e => {
-                                                this.props.onChange("password", e.value)
+                                                this.props.onChange("password", e.target.value)
                                             }
                                         }/>
                                     </InputGroup>

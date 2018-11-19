@@ -1,6 +1,6 @@
 const inititalState = {
-    username: "",
-    password: ""
+    username: "pmarkpen@andrew.cmu.edu",
+    password: "123456"
 };
 
 //reducer
