@@ -3,6 +3,9 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import {Button} from 'reactstrap'
 import PostContainer from './PostContainer';
+import {HOST} from '../../Const/URLConstant';
+import AvatarComponent from './AvatarComponent';
+import axios from 'axios';
 
 const PostContent = styled.div.attrs({
     className: "col-12"
@@ -30,19 +33,40 @@ const ButtonContainerStyle =  {
 class Post extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            portraitUrl : "",
+            profileName : ""
+        }
+    }
+
+    fetchUserData(userId, jwt) {
+        return axios.get(`${HOST}/user/${userId}`,
+         { headers: { Authorization: jwt } });
     }
 
     render() {
         const {userId, textValue, pictures, commentCount} = this.props.item;
+        const {portraitUrl, profileName} = this.state;
+        
+        if(portraitUrl == "") {
+            const {userId} = this.props.item;
+            const {jwt} = this.props;
+            this.fetchUserData(userId, jwt).then((response) => {
+                if(response.data.data != null){
+                    this.setState({portraitUrl: response.data.data.portraitUrl});
+                    this.setState({profileName: response.data.data.profileName});  
+                }
+            });
+        }
 
         return (
             <PostContainer>
                 <div className="row">
-                    <div className="col-3">
-                        Avartar
+                    <div className="col-2">
+                        <AvatarComponent url={portraitUrl}></AvatarComponent>
                     </div>
-                    <div className="col-9">
-                        {userId}
+                    <div className="col-10">
+                        {profileName}
                     </div>
                 </div>
                 <div className="row">
@@ -67,7 +91,9 @@ class Post extends Component {
 }
 
 Post.propTypes = {
+    jwt: PropTypes.string.isRequired,
     item: PropTypes.shape({
+        id: PropTypes.string.isRequired,
         userId: PropTypes.string.isRequired,
         textValue: PropTypes.string.isRequired,
         pictures: PropTypes.arrayOf(PropTypes.string).isRequired,

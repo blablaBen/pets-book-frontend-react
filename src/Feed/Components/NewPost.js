@@ -2,19 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import PostContainer from './PostContainer';
 import { Button } from 'reactstrap';
-
-const AvatarImgStyle = {
-    borderRadius: '50%',
-    width: '70%'
-}
-
-const AvatarComponent = ({ url }) => {
-    return (
-        <div className="col">
-            <img src={url} style={AvatarImgStyle}></img>
-        </div>
-    );
-}
+import AvatarComponent from './AvatarComponent';
 
 const PostTextArea = styled.textarea.attrs({
     className: "col-12"

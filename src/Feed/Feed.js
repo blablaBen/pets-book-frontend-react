@@ -28,7 +28,7 @@ class Feed extends Component {
     updateFeed() {
         const {jwt} = this.props;
         axios.get(
-            `${HOST}/newFeeds?pageSize=10&page=1`, { headers: { Authorization: jwt } }
+            `${HOST}/newFeeds?pageSize=1000&page=0`, { headers: { Authorization: jwt } }
           ).then((response) => {
             this.setState({posts:response.data.data});
           });
@@ -51,7 +51,7 @@ class Feed extends Component {
 
     render() {
         const {posts} = this.state;
-        const {portraitUrl} = this.props;
+        const {portraitUrl, jwt} = this.props;
         return (
             <FeedContainer>
                 <div className="col-8">
@@ -60,7 +60,7 @@ class Feed extends Component {
                 <div className="col-8">
                     {
                         posts.map((post, index) => {
-                          return <Post key={index} item={post} /> 
+                          return <Post key={index} item={post} jwt={jwt} /> 
                         })
                     }
                 </div>
