@@ -7,6 +7,6 @@ export const UPDATE_FEED_FULFILLED = "UPDATE_FEED_FULFILLED";
 export const updateFeed = (jwt) => ({
     type: UPDATE_FEED,
     payload: axios.get(
-        `${HOST}/newFeeds/`, { headers: { Authorization: jwt } }
+        `${HOST}/newFeeds?pageSize=10&page=1`, { headers: { Authorization: jwt } }
       )
 });

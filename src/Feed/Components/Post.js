@@ -2,16 +2,7 @@ import React, {Component} from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import {Button} from 'reactstrap'
-
-const PostContainer = styled.div.attrs({
-    className: "col-12"
-})`
-    border: 1px solid #ccc9c9;
-    border-radius: 5px;
-    background-color: white;
-    padding:15px;
-    margin-bottom: 10px;
-`;
+import PostContainer from './PostContainer';
 
 const PostContent = styled.div.attrs({
     className: "col-12"

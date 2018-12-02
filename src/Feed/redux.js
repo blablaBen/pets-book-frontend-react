@@ -18,7 +18,6 @@ export default (state = initialState, action) => {
                 posts: action.payload.data.data,
                 isLoading: false
             }
-        
         default:
             return state;
     }
