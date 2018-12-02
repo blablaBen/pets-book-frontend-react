@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import { connect } from "react-redux";
 import {onLogIn, onDataChange} from './redux';
-import { onLogInSuccess } from '../User/action';
+import { onLogInSuccess, onUpdateUserSuccess } from '../User/action';
 import axios from "axios";
 import {HOST} from '../Const/URLConstant';
 
@@ -39,11 +39,21 @@ class Login extends Component {
             'email': username,
             'password': password
         }).then((response) => {
-            this.props.onLogInSuccess(response.data.data.token, response.data.data.profileName);
-            this.props.history.push('/afterLogin');
+            const {token, profileName, userId} = response.data.data;
+            this.props.onLogInSuccess(token, profileName);
+            this.fetchUserData(userId, token).then((responseData) => {
+                const fulfieldUserData = responseData.data.data;
+                this.props.onUpdateUserSuccess(fulfieldUserData);
+                this.props.history.push('/afterLogin');
+            });
         }, (error) => {
             alert(`Error!: ${error.response.data.errorMessage}`);
         });
+    }
+
+    fetchUserData(userId, jwt) {
+        return axios.get(`${HOST}/user/${userId}`,
+         { headers: { Authorization: jwt } });
     }
 
     render() {
@@ -94,7 +104,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
     onLogIn: () => dispatch(onLogIn()),
     onChange: (key,value) => dispatch(onDataChange(key, value)),
-    onLogInSuccess: (jwt, username) => dispatch(onLogInSuccess(jwt, username))
+    onLogInSuccess: (jwt, username) => dispatch(onLogInSuccess(jwt, username)),
+    onUpdateUserSuccess: (fulfieldUserData) => dispatch(onUpdateUserSuccess(fulfieldUserData))
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Login));

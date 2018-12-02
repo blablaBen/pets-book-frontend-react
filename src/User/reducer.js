@@ -1,8 +1,10 @@
 import { userConstants } from './action';
 const initialState = {
-    isLoggedIn: false, 
+    isLoggedIn: false,
+    isUserDataFulfield: false, 
     jwt: '',
-    userData: {}
+    userData: {},
+    fulfilledUserData: {}
 }
 
 export default (state= initialState, action) => {
@@ -16,6 +18,13 @@ export default (state= initialState, action) => {
                     username: action.username
                 }
             };
+
+        case userConstants.UPDATE_USER_SUCCESS:
+            return {
+                ...state,
+                isUserDataFulfield: true,
+                fulfilledUserData : action.fulfilledUserData
+            }
         default:
             return initialState;
     }
