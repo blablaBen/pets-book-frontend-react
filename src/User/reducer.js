@@ -14,6 +14,7 @@ export default (state= initialState, action) => {
                 ...state,
                 isLoggedIn : true,
                 jwt: action.jwt,
+                userId: action.userId,
                 userData: {
                     username: action.username
                 }

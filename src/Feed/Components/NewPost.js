@@ -41,15 +41,17 @@ export default class NewPost extends Component {
         this.state = {
             textArea : ""
         };
+      
     }
 
     onTextAreaChanged = (value) => {
-        this.setState({textarea : value});
+        this.setState({textArea : value});
     };
 
-    onClickSubmit = () => {
+    onPost = () => {
         const {textArea} = this.state;
-        this.onClickSubmit({content : textArea});
+        const {onClickPost} = this.props;
+        onClickPost(textArea);
     }
 
     render() {
@@ -76,7 +78,10 @@ export default class NewPost extends Component {
                 <div className="row">
                         <div className="col-10"></div>
                         <div className="col-2">
-                            <Button outline color="primary" block onClick={this.onLogIn}>Post</Button>{' '}
+                            <Button outline color="primary" block onClick={
+                                e => {
+                                    this.onPost()
+                                }}>Post</Button>{' '}
                         </div> 
                 </div>
             </PostContainer>

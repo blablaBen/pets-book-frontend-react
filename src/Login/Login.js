@@ -40,7 +40,7 @@ class Login extends Component {
             'password': password
         }).then((response) => {
             const {token, profileName, userId} = response.data.data;
-            this.props.onLogInSuccess(token, profileName);
+            this.props.onLogInSuccess(token, profileName, userId);
             this.fetchUserData(userId, token).then((responseData) => {
                 const fulfieldUserData = responseData.data.data;
                 this.props.onUpdateUserSuccess(fulfieldUserData);
@@ -104,7 +104,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
     onLogIn: () => dispatch(onLogIn()),
     onChange: (key,value) => dispatch(onDataChange(key, value)),
-    onLogInSuccess: (jwt, username) => dispatch(onLogInSuccess(jwt, username)),
+    onLogInSuccess: (jwt, username, userId) => dispatch(onLogInSuccess(jwt, username, userId)),
     onUpdateUserSuccess: (fulfieldUserData) => dispatch(onUpdateUserSuccess(fulfieldUserData))
 });
 

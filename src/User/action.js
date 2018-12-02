@@ -3,11 +3,12 @@ export const userConstants = {
     UPDATE_USER_SUCCESS: "UPDATE_USER_SUCCESS"
 }
 
-export const onLogInSuccess = (jwt, username) => {
+export const onLogInSuccess = (jwt, username, userId) => {
     return {
         type: userConstants.LOGIN_SUCCESS,
         jwt: jwt,
-        username: username
+        username: username,
+        userId: userId
     }
 }
 

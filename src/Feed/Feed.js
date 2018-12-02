@@ -34,13 +34,28 @@ class Feed extends Component {
           });
     }
 
+    onClickPost = (content) => {
+        const {jwt, userId} = this.props;
+        const newStatus = {
+            "userId": userId,
+            "textValue": content,
+            "pictures": []
+        }
+
+        axios.post(
+            `${HOST}/newFeeds/`, newStatus, { headers: { Authorization: jwt } }  
+        ).then((response) => {
+            this.updateFeed();
+        });
+    }
+
     render() {
         const {posts} = this.state;
         const {portraitUrl} = this.props;
         return (
             <FeedContainer>
                 <div className="col-8">
-                    <NewPost portraitUrl={portraitUrl}></NewPost>
+                    <NewPost portraitUrl={portraitUrl} onClickPost={this.onClickPost}></NewPost>
                 </div>
                 <div className="col-8">
                     {
@@ -56,6 +71,7 @@ class Feed extends Component {
 
 const mapStateToProps = state => ({
     jwt: state.user.jwt,
+    userId: state.user.userId,
     portraitUrl: state.user.fulfilledUserData.portraitUrl
 });
 
