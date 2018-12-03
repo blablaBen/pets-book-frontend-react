@@ -60,7 +60,7 @@ class Feed extends Component {
                 <div className="col-8">
                     {
                         posts.map((post, index) => {
-                          return <Post key={index} item={post} jwt={jwt} /> 
+                          return <Post key={index} item={post} jwt={jwt} currentUserPortraitUrl={portraitUrl} /> 
                         })
                     }
                 </div>

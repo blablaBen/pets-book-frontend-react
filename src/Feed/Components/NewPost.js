@@ -66,7 +66,7 @@ export default class NewPost extends Component {
                 <div className="row">
                         <div className="col-10"></div>
                         <div className="col-2">
-                            <Button outline color="primary" block onClick={
+                            <Button  color="primary" block onClick={
                                 e => {
                                     this.onPost()
                                 }}>Post</Button>{' '}

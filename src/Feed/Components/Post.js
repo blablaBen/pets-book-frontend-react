@@ -26,8 +26,23 @@ const ImgComponent = ({url}) => {
     );
 }
 
-const ButtonContainerStyle =  {
-    padding: "15px"
+const ShowCommentsButtonContainerStyle =  {
+    padding: "5px",
+    padding: "5px",
+    textAlign: "center",
+    textDecoration: "underline",
+    color: "#c54057",
+    fontSize: "0.8rem",
+    cursor: "pointer"
+}
+
+
+const AddCommentsButtonContainerStyle =  {
+    padding: "5px"
+}
+
+const CommentStyle = {
+    margin: "5px"
 }
 
 class Post extends Component {
@@ -45,6 +60,7 @@ class Post extends Component {
     }
 
     render() {
+        const {currentUserPortraitUrl} = this.props;
         const {userId, textValue, pictures, commentCount} = this.props.item;
         const {portraitUrl, profileName} = this.state;
         
@@ -81,8 +97,19 @@ class Post extends Component {
                     }
                 </div>
                 <div className="row">
-                    <div className="col" style={ButtonContainerStyle}>
-                        <Button color="primary" size="sm" block>Show {commentCount} Comments</Button>
+                    <div className="col" style={ShowCommentsButtonContainerStyle}>
+                        Show {commentCount} Comments
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-2">
+                        <AvatarComponent url={currentUserPortraitUrl}></AvatarComponent>
+                    </div>
+                    <div className="col-6">
+                        <input className="col-12" style={CommentStyle}></input>
+                    </div>
+                    <div className="col-3" style={AddCommentsButtonContainerStyle}>
+                        <Button outline color="primary" size="sm" block>Add Comment</Button>
                     </div>
                 </div>
             </PostContainer>
@@ -92,6 +119,7 @@ class Post extends Component {
 
 Post.propTypes = {
     jwt: PropTypes.string.isRequired,
+    currentUserPortraitUrl: PropTypes.string.isRequired,
     item: PropTypes.shape({
         id: PropTypes.string.isRequired,
         userId: PropTypes.string.isRequired,
