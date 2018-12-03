@@ -46,6 +46,15 @@ const CommentStyle = {
     margin: "5px"
 }
 
+const AvatarContainerStyle = {
+    padding: "5px",
+    textAlign: "center"
+}
+
+const ProfileNameStyle = {
+    padding: "10px"
+}
+
 class Post extends Component {
     constructor(props) {
         super(props);
@@ -124,10 +133,10 @@ class Post extends Component {
         return (
             <PostContainer>
                 <div className="row">
-                    <div className="col-2">
+                    <div className="col-2" style={AvatarContainerStyle}>
                         <AvatarComponent url={portraitUrl}></AvatarComponent>
                     </div>
-                    <div className="col-10">
+                    <div className="col-10" style={ProfileNameStyle}>
                         {profileName}
                     </div>
                 </div>
