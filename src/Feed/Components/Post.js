@@ -146,7 +146,7 @@ class Post extends Component {
                     </PostContent>
                 </div>
                 <div className="row">
-                    {pictures.length > 0 && pictures.map((url, index) => {
+                    {pictures && pictures.length > 0 && pictures.map((url, index) => {
                         return <ImgComponent url={url} key={index}></ImgComponent>;
                     })
                     }

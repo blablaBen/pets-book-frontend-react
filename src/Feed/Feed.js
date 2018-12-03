@@ -13,24 +13,43 @@ const FeedContainer = styled.div.attrs({
 
 `;
 
+const ShowMorePostButtonContainerStyle = {
+    textAlign: "center",
+    textDecoration: "underline",
+    color: "#c54057",
+    cursor: "pointer"
+}
+
 class Feed extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            posts: []
+            posts: [],
+            pageSize: 10,
+            page: 0
         };
     }
 
     componentWillMount() {
-        this.updateFeed();
+        const {pageSize, page} = this.state;
+        this.updateFeed(pageSize, page);
     }
 
-    updateFeed() {
+    showMoreFeed() {
+        let pageSize = this.state.pageSize;
+        let newPage = this.state.page + pageSize;
+        this.updateFeed(pageSize, newPage);
+        this.setState({pageSize: pageSize, page:newPage});
+    }
+
+    updateFeed(pageSize, page) {
         const { jwt } = this.props;
         axios.get(
-            `${HOST}/newFeeds?pageSize=1000&page=0`, { headers: { Authorization: jwt } }
+            `${HOST}/newFeeds?pageSize=${pageSize}&page=${page}`, { headers: { Authorization: jwt } }
         ).then((response) => {
-            this.setState({ posts: response.data.data });
+            let postItems = this.state.posts;
+            postItems = postItems.concat(response.data.data);
+            this.setState({ posts: postItems });
         }, (error) => {
             alert(`Error: ${error.response.data.errorMessage}`);
         });
@@ -67,6 +86,11 @@ class Feed extends Component {
                             return <Post key={index} item={post} jwt={jwt} currentUserId={userId} currentUserPortraitUrl={portraitUrl} />
                         })
                     }
+                </div>
+                <div className="col-12" style={ShowMorePostButtonContainerStyle} onClick={(e) => {
+                    this.showMoreFeed();
+                }}>
+                    Display More Items
                 </div>
             </FeedContainer>
         );
