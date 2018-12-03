@@ -50,7 +50,8 @@ class Post extends Component {
         super(props);
         this.state = {
             portraitUrl : "",
-            profileName : ""
+            profileName : "",
+            commentText: ""
         }
     }
 
@@ -59,6 +60,32 @@ class Post extends Component {
          { headers: { Authorization: jwt } });
     }
 
+    onAddCommentTextChange(newText) {
+        this.setState({commentText: newText});
+    }
+
+    onClickAddComment() {
+        const {id} = this.props.item;
+        const {currentUserId, jwt} = this.props;
+        const {commentText} = this.state;
+        this.addComment(currentUserId, id,commentText, jwt).then(() => {
+            this.setState({commentText: ""});
+        }, (reason) => {
+            alert(`Error: ${reason}`);
+        });
+    }
+
+    addComment(userId, postId, commentText, jwt) {
+        const commentObj = {
+            "userId": userId,
+            "content": commentText
+        };
+
+        return axios.post(
+            `${HOST}/newFeeds/${postId}/comments`, commentObj, { headers: { Authorization: jwt } }  
+        );
+    }
+    
     render() {
         const {currentUserPortraitUrl} = this.props;
         const {userId, textValue, pictures, commentCount} = this.props.item;
@@ -106,10 +133,16 @@ class Post extends Component {
                         <AvatarComponent url={currentUserPortraitUrl}></AvatarComponent>
                     </div>
                     <div className="col-6">
-                        <input className="col-12" style={CommentStyle}></input>
+                        <input className="col-12" style={CommentStyle} onChange={(e) => {
+                            this.onAddCommentTextChange(e.target.value);
+                        }}></input>
                     </div>
                     <div className="col-3" style={AddCommentsButtonContainerStyle}>
-                        <Button outline color="primary" size="sm" block>Add Comment</Button>
+                        <Button outline color="primary" size="sm" block onClick={
+                         (e) => {
+                            this.onClickAddComment();
+                         }   
+                        }>Add Comment</Button>
                     </div>
                 </div>
             </PostContainer>
@@ -120,6 +153,7 @@ class Post extends Component {
 Post.propTypes = {
     jwt: PropTypes.string.isRequired,
     currentUserPortraitUrl: PropTypes.string.isRequired,
+    currentUserId: PropTypes.string.isRequired,
     item: PropTypes.shape({
         id: PropTypes.string.isRequired,
         userId: PropTypes.string.isRequired,

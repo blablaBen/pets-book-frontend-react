@@ -51,7 +51,7 @@ class Feed extends Component {
 
     render() {
         const {posts} = this.state;
-        const {portraitUrl, jwt} = this.props;
+        const {portraitUrl, jwt, userId} = this.props;
         return (
             <FeedContainer>
                 <div className="col-8">
@@ -60,7 +60,7 @@ class Feed extends Component {
                 <div className="col-8">
                     {
                         posts.map((post, index) => {
-                          return <Post key={index} item={post} jwt={jwt} currentUserPortraitUrl={portraitUrl} /> 
+                          return <Post key={index} item={post} jwt={jwt} currentUserId={userId} currentUserPortraitUrl={portraitUrl} /> 
                         })
                     }
                 </div>
