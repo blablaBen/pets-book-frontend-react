@@ -1,11 +1,12 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import {Button} from 'reactstrap'
+import { Button } from 'reactstrap'
 import PostContainer from './PostContainer';
-import {HOST} from '../../Const/URLConstant';
+import { HOST } from '../../Const/URLConstant';
 import AvatarComponent from './AvatarComponent';
 import axios from 'axios';
+import Comment from './Comment';
 
 const PostContent = styled.div.attrs({
     className: "col-12"
@@ -18,7 +19,7 @@ const ImgStyle = {
     width: "inherit",
     marginTop: "15px"
 }
-const ImgComponent = ({url}) => {
+const ImgComponent = ({ url }) => {
     return (
         <div className="col">
             <img src={url} style={ImgStyle}></img>
@@ -26,7 +27,7 @@ const ImgComponent = ({url}) => {
     );
 }
 
-const ShowCommentsButtonContainerStyle =  {
+const ShowCommentsButtonContainerStyle = {
     padding: "5px",
     padding: "5px",
     textAlign: "center",
@@ -37,7 +38,7 @@ const ShowCommentsButtonContainerStyle =  {
 }
 
 
-const AddCommentsButtonContainerStyle =  {
+const AddCommentsButtonContainerStyle = {
     padding: "5px"
 }
 
@@ -49,31 +50,32 @@ class Post extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            portraitUrl : "",
-            profileName : "",
+            portraitUrl: "",
+            profileName: "",
             commentText: "",
+            isShowingComment: false,
             comments: []
         }
     }
 
     fetchUserData(userId, jwt) {
         return axios.get(`${HOST}/user/${userId}`,
-         { headers: { Authorization: jwt } });
+            { headers: { Authorization: jwt } });
     }
 
     onAddCommentTextChange(newText) {
-        this.setState({commentText: newText});
+        this.setState({ commentText: newText });
     }
 
     onClickAddComment() {
-        const {id} = this.props.item;
-        const {currentUserId, jwt} = this.props;
-        const {commentText} = this.state;
-        this.addComment(currentUserId, id,commentText, jwt).then(() => {
-            this.setState({commentText: ""});
+        const { id } = this.props.item;
+        const { currentUserId, jwt } = this.props;
+        const { commentText } = this.state;
+        this.addComment(currentUserId, id, commentText, jwt).then(() => {
+            this.setState({ commentText: "" });
             this.onClickShowComments();
-        }, (reason) => {
-            alert(`Error: ${reason.errorMessage}`);
+        }, (error) => {
+            alert(`Error: ${error.response.data.errorMessage}`);
         });
     }
 
@@ -84,37 +86,37 @@ class Post extends Component {
         };
 
         return axios.post(
-            `${HOST}/newFeeds/${postId}/comments`, commentObj, { headers: { Authorization: jwt } }  
+            `${HOST}/newFeeds/${postId}/comments`, commentObj, { headers: { Authorization: jwt } }
         );
     }
 
     onClickShowComments() {
-        const {id} = this.props.item;
-        const {jwt} = this.props;
-        this.fetchComments(id,jwt).then((response) => {
-            this.setState({comments: response.data.data});
-        }, (reason) => {
-            alert(`Error: ${reason.errorMessage}`);
+        const { id } = this.props.item;
+        const { jwt } = this.props;
+        this.fetchComments(id, jwt).then((response) => {
+            this.setState({ comments: response.data.data, isShowingComment: true });
+        }, (error) => {
+            alert(`Error: ${error.response.data.errorMessage}`);
         })
     }
 
     fetchComments(postId, jwt) {
         return axios.get(`${HOST}/newFeeds/${postId}/comments`,
-         { headers: { Authorization: jwt } });
+            { headers: { Authorization: jwt } });
     }
-    
+
     render() {
-        const {currentUserPortraitUrl} = this.props;
-        const {userId, textValue, pictures, commentCount} = this.props.item;
-        const {portraitUrl, profileName} = this.state;
-        
-        if(portraitUrl == "") {
-            const {userId} = this.props.item;
-            const {jwt} = this.props;
+        const { currentUserPortraitUrl, jwt } = this.props;
+        const { userId, textValue, pictures, commentCount } = this.props.item;
+        const { portraitUrl, profileName, isShowingComment, comments } = this.state;
+
+        if (portraitUrl == "") {
+            const { userId } = this.props.item;
+            const { jwt } = this.props;
             this.fetchUserData(userId, jwt).then((response) => {
-                if(response.data.data != null){
-                    this.setState({portraitUrl: response.data.data.portraitUrl});
-                    this.setState({profileName: response.data.data.profileName});  
+                if (response.data.data != null) {
+                    this.setState({ portraitUrl: response.data.data.portraitUrl });
+                    this.setState({ profileName: response.data.data.profileName });
                 }
             });
         }
@@ -141,13 +143,20 @@ class Post extends Component {
                     }
                 </div>
                 <div className="row">
-                    <div className="col" style={ShowCommentsButtonContainerStyle} onClick={
-                        (e) => {
-                            this.onClickShowComments();
-                        }
-                    }>
-                        Show {commentCount} Comments
+                    {!isShowingComment &&
+                        <div className="col" style={ShowCommentsButtonContainerStyle} onClick={
+                            (e) => {
+                                this.onClickShowComments();
+                            }
+                        }>
+                            Show {commentCount} Comments
                     </div>
+                    }
+                    {isShowingComment &&
+                        comments.map((comment, index) => {
+                            return <Comment key={index} jwt={jwt} id={comment.id} content={comment.content} time={comment.time} userId={comment.userId}></Comment>
+                        })
+                    }
                 </div>
                 <div className="row">
                     <div className="col-2">
@@ -160,9 +169,9 @@ class Post extends Component {
                     </div>
                     <div className="col-3" style={AddCommentsButtonContainerStyle}>
                         <Button outline color="primary" size="sm" block onClick={
-                         (e) => {
-                            this.onClickAddComment();
-                         }   
+                            (e) => {
+                                this.onClickAddComment();
+                            }
                         }>Add Comment</Button>
                     </div>
                 </div>
