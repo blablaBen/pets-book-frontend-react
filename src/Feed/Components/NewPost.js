@@ -40,11 +40,12 @@ export default class NewPost extends Component {
         const {textArea} = this.state;
         const {onClickPost} = this.props;
         onClickPost(textArea);
+        this.setState({textArea: ""});
     }
 
     render() {
         const { onClickSubmit, portraitUrl } = this.props;
-        const {textarea} = this.state;
+        const {textArea} = this.state;
         return (
             <PostContainer>
                 <div className="row">
@@ -54,11 +55,11 @@ export default class NewPost extends Component {
                                 <AvatarComponent url={portraitUrl} ></AvatarComponent>
                             </div>
                             <div className="col-8">
-                                <textArea className="col-12" style={PostTextAreaStyle} placeholder="What's on your mind?" onChange={
+                                <textarea className="col-12" value={textArea} style={PostTextAreaStyle} placeholder="What's on your mind?" onChange={
                                     e => {
                                         this.onTextAreaChanged(e.target.value)
                                     }
-                                }></textArea>
+                                }></textarea>
                             </div>
                         </div>
                     </UpperContainer>

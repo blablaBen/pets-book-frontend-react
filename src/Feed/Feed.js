@@ -66,10 +66,18 @@ class Feed extends Component {
         axios.post(
             `${HOST}/newFeeds/`, newStatus, { headers: { Authorization: jwt } }
         ).then((response) => {
-            this.updateFeed();
+            this.resetFeed();
         }, (error) => {
             alert(`Error: ${error.response.data.errorMessage}`);
         });
+    }
+
+    resetFeed() {
+        let pageSize = 10;
+        let newPage = 0;
+        this.setState({posts: []});
+        this.updateFeed(pageSize, newPage);
+        this.setState({pageSize: pageSize, page:newPage});
     }
 
     render() {
