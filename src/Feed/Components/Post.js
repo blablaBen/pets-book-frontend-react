@@ -51,7 +51,8 @@ class Post extends Component {
         this.state = {
             portraitUrl : "",
             profileName : "",
-            commentText: ""
+            commentText: "",
+            comments: []
         }
     }
 
@@ -70,8 +71,9 @@ class Post extends Component {
         const {commentText} = this.state;
         this.addComment(currentUserId, id,commentText, jwt).then(() => {
             this.setState({commentText: ""});
+            this.onClickShowComments();
         }, (reason) => {
-            alert(`Error: ${reason}`);
+            alert(`Error: ${reason.errorMessage}`);
         });
     }
 
@@ -84,6 +86,21 @@ class Post extends Component {
         return axios.post(
             `${HOST}/newFeeds/${postId}/comments`, commentObj, { headers: { Authorization: jwt } }  
         );
+    }
+
+    onClickShowComments() {
+        const {id} = this.props.item;
+        const {jwt} = this.props;
+        this.fetchComments(id,jwt).then((response) => {
+            this.setState({comments: response.data.data});
+        }, (reason) => {
+            alert(`Error: ${reason.errorMessage}`);
+        })
+    }
+
+    fetchComments(postId, jwt) {
+        return axios.get(`${HOST}/newFeeds/${postId}/comments`,
+         { headers: { Authorization: jwt } });
     }
     
     render() {
@@ -124,7 +141,11 @@ class Post extends Component {
                     }
                 </div>
                 <div className="row">
-                    <div className="col" style={ShowCommentsButtonContainerStyle}>
+                    <div className="col" style={ShowCommentsButtonContainerStyle} onClick={
+                        (e) => {
+                            this.onClickShowComments();
+                        }
+                    }>
                         Show {commentCount} Comments
                     </div>
                 </div>
