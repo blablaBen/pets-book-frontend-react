@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import axios from 'axios';
 import AvatarComponent from './AvatarComponent';
 import PropTypes from 'prop-types';
-import {HOST} from '../../Const/URLConstant';
+import { HOST } from '../../Const/URLConstant';
 
 const ComponentStyle = {
     margin: "10px"
@@ -29,9 +29,9 @@ class Comment extends Component {
     loadUserProfile() {
         const { userId, jwt } = this.props;
         this.fetchUserData(userId, jwt).then((response) => {
-            if(response.data.data != null) {
-                const {profileName, portraitUrl} = response.data.data;
-                this.setState({isLoaded: true, profileName: profileName, portraitUrl: portraitUrl});
+            if (response.data.data != null) {
+                const { profileName, portraitUrl } = response.data.data;
+                this.setState({ isLoaded: true, profileName: profileName, portraitUrl: portraitUrl });
             }
         }, (reason) => {
             alert(`Error: ${reason.errorMessage}`);
@@ -48,14 +48,16 @@ class Comment extends Component {
         const { content } = this.props;
 
         return (
-            isLoaded && 
-            <div className="row" style={ComponentStyle}>
-                <div className="col-2">
-                    <AvatarComponent url={portraitUrl}></AvatarComponent>
-                </div>
-                <div className="col-8">
-                    <div>
-                        <span style={ProfileNameStyle}>{profileName}:</span> {content}
+            isLoaded &&
+            <div className="col-12" style={ComponentStyle}>
+                <div className="row">
+                    <div className="col-2">
+                        <AvatarComponent url={portraitUrl}></AvatarComponent>
+                    </div>
+                    <div className="col-10">
+                        <div>
+                            <span style={ProfileNameStyle}>{profileName}:</span> {content}
+                        </div>
                     </div>
                 </div>
             </div>

@@ -117,7 +117,7 @@ class Post extends Component {
     render() {
         const { currentUserPortraitUrl, jwt } = this.props;
         const { userId, textValue, pictures, commentCount } = this.props.item;
-        const { portraitUrl, profileName, isShowingComment, comments } = this.state;
+        const { portraitUrl, profileName, isShowingComment, comments, commentText } = this.state;
 
         if (portraitUrl == "") {
             const { userId } = this.props.item;
@@ -172,7 +172,7 @@ class Post extends Component {
                         <AvatarComponent url={currentUserPortraitUrl}></AvatarComponent>
                     </div>
                     <div className="col-6">
-                        <input className="col-12" style={CommentStyle} onChange={(e) => {
+                        <input className="col-12" style={CommentStyle} value={commentText} onChange={(e) => {
                             this.onAddCommentTextChange(e.target.value);
                         }}></input>
                     </div>

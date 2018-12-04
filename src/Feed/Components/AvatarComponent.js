@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 const AvatarImgStyle = {
     borderRadius: '50%',
-    width: '70%'
+    width: '50px'
 }
 
 const AvatarComponent = ({ url }) => {

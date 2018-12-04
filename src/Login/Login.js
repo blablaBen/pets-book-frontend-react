@@ -10,6 +10,8 @@ import './Login.css';
 
 import { InputGroup, InputGroupAddon, Input, Button } from 'reactstrap';
 import styled from 'styled-components';
+import GoogleLogin from 'react-google-login';
+
 
 const Container = styled.div.attrs({
     className: "container-fluid h-100"
@@ -30,30 +32,54 @@ const LoginContainer = styled.div.attrs({
     border-radius: 3px;
 `
 
+const LoginWithGoogleStyle = {
+    textAlign: "center"
+}
 
 class Login extends Component {
+
+    constructor(props) {
+        super(props);
+        this.responseGoogle = this.onResponseFromGoogle.bind(this);
+    }
+
     onLogIn = () => {
         const {username, password} = this.props;
-        console.log(`${username} ${password}`);
         axios.post(`${HOST}/sessions`, {
             'email': username,
             'password': password
         }).then((response) => {
             const {token, profileName, userId} = response.data.data;
-            this.props.onLogInSuccess(token, profileName, userId);
-            this.fetchUserData(userId, token).then((responseData) => {
-                const fulfieldUserData = responseData.data.data;
-                this.props.onUpdateUserSuccess(fulfieldUserData);
-                this.props.history.push('/afterLogin');
-            });
+            this.processAfterLogin(token, profileName, userId);
         }, (error) => {
             alert(`Error!: ${error.response.data.errorMessage}`);
+        });
+    }
+
+    processAfterLogin(token, profileName, userId) {
+        this.props.onLogInSuccess(token, profileName, userId);
+        this.fetchUserData(userId, token).then((responseData) => {
+            const fulfieldUserData = responseData.data.data;
+            this.props.onUpdateUserSuccess(fulfieldUserData);
+            this.props.history.push('/afterLogin');
         });
     }
 
     fetchUserData(userId, jwt) {
         return axios.get(`${HOST}/user/${userId}`,
          { headers: { Authorization: jwt } });
+    }
+
+    onResponseFromGoogle(googleUser) {
+        let token = googleUser.getAuthResponse().id_token;
+        axios.post(`${HOST}/sessions?isSSO=true`, {
+            'idtoken': token
+        }).then((response) => {
+            const {token, profileName, userId} = response.data.data;
+            this.processAfterLogin(token, profileName, userId);
+        }, (error) => {
+            alert(`Error!: ${error.response.data.errorMessage}`);
+        });
     }
 
     render() {
@@ -86,6 +112,14 @@ class Login extends Component {
                                 </div>
                                 <div className="col-12 login-input">
                                     <Button outline color="primary" block onClick={this.onLogIn}>Login</Button>{' '}
+                                </div>
+                                <div className="col-12" style={LoginWithGoogleStyle}>
+                                    <GoogleLogin
+                                        clientId="541115279526-k7ps60te3gfd3os9satu7sjb0ipsfrbj.apps.googleusercontent.com"
+                                        buttonText="Login With Google"
+                                        onSuccess={this.responseGoogle}
+                                        onFailure={this.responseGoogle}
+                                    />
                                 </div>
                             </LoginContainer>
                         </div>
