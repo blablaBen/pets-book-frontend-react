@@ -55,12 +55,12 @@ class Feed extends Component {
         });
     }
 
-    onClickPost = (content) => {
+    onClickPost = (content, pictureUrls) => {
         const { jwt, userId } = this.props;
         const newStatus = {
             "userId": userId,
             "textValue": content,
-            "pictures": []
+            "pictures": pictureUrls
         }
 
         axios.post(
