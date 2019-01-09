@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import {connect} from 'react-redux';
-import {Route, withRouter} from 'react-router-dom';
+import {Route, withRouter, Link} from 'react-router-dom';
+import Ask from './../Ask/Ask';
 import './AfterLogin.css';
 
 import {
@@ -53,22 +54,22 @@ class AfterLogin extends Component {
                     <Collapse isOpen={this.state.isOpen} navbar>
                         <Nav className="ml-auto" navbar>
                             <NavItem>
-                                <NavLink href={FEED_URL}>Feed</NavLink>
+                                <NavLink tag={Link} to={FEED_URL}>Feed</NavLink>
                             </NavItem>
                             <NavItem>
-                                <NavLink href={INTEREST_URL}>Interest</NavLink>
+                                <NavLink tag={Link} to={INTEREST_URL}>Interest</NavLink>
                             </NavItem>
                             <NavItem>
-                                <NavLink href={ASK_URL}>Ask</NavLink>
+                                <NavLink tag={Link} to={ASK_URL}>Ask</NavLink>
                             </NavItem>
                             <NavItem>
                                 <Input placeholder="Search User Profile" />    
                             </NavItem>
                             <NavItem>
-                                <NavLink href={INBOX_URL}>Inbox</NavLink>
+                                <NavLink tag={Link} to={INBOX_URL}>Inbox</NavLink>
                             </NavItem>
                             <NavItem>
-                                <NavLink href={PROFILE_URL}>Profile</NavLink>
+                                <NavLink tag={Link} to={PROFILE_URL}>Profile</NavLink>
                             </NavItem>
                         </Nav>
                     </Collapse>
@@ -76,6 +77,7 @@ class AfterLogin extends Component {
                 <Container>
                     <Switch>
                         <Route path={FEED_URL} component={Feed} />
+                        <Route path={ASK_URL} component={Ask} />
                         <Redirect exact from="/afterLogin" to={FEED_URL} />
                     </Switch>
                 </Container>
