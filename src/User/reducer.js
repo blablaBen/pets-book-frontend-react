@@ -1,5 +1,4 @@
 import { userConstants } from './action';
-import auth from './auth';
 
 const initialState = {
     isLoggedIn: false,
@@ -12,7 +11,6 @@ const initialState = {
 export default (state= initialState, action) => {
     switch(action.type) {
         case userConstants.LOGIN_SUCCESS:
-            auth.isLoggedIn = true;
             sessionStorage.setItem('jwt', action.jwt);
             sessionStorage.setItem('userId', action.userId);
             sessionStorage.setItem('username', action.username);
