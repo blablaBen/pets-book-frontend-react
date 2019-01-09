@@ -17,13 +17,16 @@ const getUserInformationFromSessionStorage = () => {
   if(sessionStorage.getItem('jwt')) {
     auth.isLoggedIn = true;
     return {
-      isLoggedIn: true,
-      isUserDataFulfield: true, 
-      jwt: sessionStorage.getItem('jwt'),
-      userData: {
-        username: sessionStorage.getItem('username')
-      },
-      fulfilledUserData: sessionStorage.getItem('fulfilledUserData')
+      user: {
+        isLoggedIn: true,
+        isUserDataFulfield: true, 
+        jwt: sessionStorage.getItem('jwt'),
+        userId: sessionStorage.getItem('userId'),
+        userData: {
+          username: sessionStorage.getItem('username')
+        },
+        fulfilledUserData: sessionStorage.getItem('fulfilledUserData')
+      }
     }
   }
 

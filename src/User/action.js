@@ -1,6 +1,7 @@
 export const userConstants = {
     LOGIN_SUCCESS: "LOGIN_SUCCESS",
-    UPDATE_USER_SUCCESS: "UPDATE_USER_SUCCESS"
+    UPDATE_USER_SUCCESS: "UPDATE_USER_SUCCESS",
+    INITIAL: "@@INIT"
 }
 
 export const onLogInSuccess = (jwt, username, userId) => {

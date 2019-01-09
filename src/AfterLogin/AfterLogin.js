@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import {connect} from 'react-redux';
-import {withRouter} from 'react-router-dom';
+import {Route, withRouter} from 'react-router-dom';
 import './AfterLogin.css';
 
 import {
@@ -76,7 +76,7 @@ class AfterLogin extends Component {
                 </Navbar>
                 <Container>
                     <Switch>
-                        <PrivateRoute path={FEED_URL} component={Feed} />
+                        <Route path={FEED_URL} component={Feed} />
                         <Redirect exact from="/afterLogin" to={FEED_URL} />
                     </Switch>
                 </Container>

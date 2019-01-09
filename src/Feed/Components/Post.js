@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { Button } from 'reactstrap'
 import PostContainer from './PostContainer';
 import { HOST } from '../../Const/URLConstant';
 import AvatarComponent from './AvatarComponent';
 import axios from 'axios';
 import Comment from './Comment';
+import AddNewComponent from './AddNewComment';
 
 const PostContent = styled.div.attrs({
     className: "col-12"
@@ -38,13 +38,7 @@ const ShowCommentsButtonContainerStyle = {
 }
 
 
-const AddCommentsButtonContainerStyle = {
-    padding: "5px"
-}
 
-const CommentStyle = {
-    margin: "5px"
-}
 
 const AvatarContainerStyle = {
     padding: "5px",
@@ -65,6 +59,8 @@ class Post extends Component {
             isShowingComment: false,
             comments: []
         }
+
+        this.onClickAddComment = this.onClickAddComment.bind(this);
     }
 
     fetchUserData(userId, jwt) {
@@ -72,17 +68,11 @@ class Post extends Component {
             { headers: { Authorization: jwt } });
     }
 
-    onAddCommentTextChange(newText) {
-        this.setState({ commentText: newText });
-    }
-
-    onClickAddComment() {
+    onClickAddComment(commentText) {
         const { id } = this.props.item;
         const { currentUserId, jwt } = this.props;
-        const { commentText } = this.state;
         this.addComment(currentUserId, id, commentText, jwt).then(() => {
-            this.setState({ commentText: "" });
-            this.onClickShowComments();
+            this.fetchComments();
         }, (error) => {
             alert(`Error: ${error.response.data.errorMessage}`);
         });
@@ -100,18 +90,18 @@ class Post extends Component {
     }
 
     onClickShowComments() {
+       this.fetchComments();
+    }
+
+    fetchComments() {
         const { id } = this.props.item;
         const { jwt } = this.props;
-        this.fetchComments(id, jwt).then((response) => {
+        axios.get(`${HOST}/newFeeds/${id}/comments`,
+            { headers: { Authorization: jwt }}).then((response) => {
             this.setState({ comments: response.data.data, isShowingComment: true });
         }, (error) => {
             alert(`Error: ${error.response.data.errorMessage}`);
         })
-    }
-
-    fetchComments(postId, jwt) {
-        return axios.get(`${HOST}/newFeeds/${postId}/comments`,
-            { headers: { Authorization: jwt } });
     }
 
     render() {
@@ -168,21 +158,10 @@ class Post extends Component {
                     }
                 </div>
                 <div className="row">
-                    <div className="col-2">
-                        <AvatarComponent url={currentUserPortraitUrl}></AvatarComponent>
-                    </div>
-                    <div className="col-6">
-                        <input className="col-12" style={CommentStyle} value={commentText} onChange={(e) => {
-                            this.onAddCommentTextChange(e.target.value);
-                        }}></input>
-                    </div>
-                    <div className="col-3" style={AddCommentsButtonContainerStyle}>
-                        <Button outline color="primary" size="sm" block onClick={
-                            (e) => {
-                                this.onClickAddComment();
-                            }
-                        }>Add Comment</Button>
-                    </div>
+                    <AddNewComponent 
+                        currentUserPortraitUrl={this.currentUserPortraitUrl}
+                        onClickAddComment={this.onClickAddComment}
+                    ></AddNewComponent>
                 </div>
             </PostContainer>
         );

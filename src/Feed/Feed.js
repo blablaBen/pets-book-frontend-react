@@ -25,7 +25,7 @@ class Feed extends Component {
         super(props);
         this.state = {
             posts: [],
-            pageSize: 10,
+            pageSize: 100,
             page: 0
         };
     }
@@ -39,17 +39,16 @@ class Feed extends Component {
         let pageSize = this.state.pageSize;
         let newPage = this.state.page + pageSize;
         this.updateFeed(pageSize, newPage);
-        this.setState({pageSize: pageSize, page:newPage});
     }
 
-    updateFeed(pageSize, page) {
+    updateFeed(pageSize, newPage) {
         const { jwt } = this.props;
         axios.get(
-            `${HOST}/newFeeds?pageSize=${pageSize}&page=${page}`, { headers: { Authorization: jwt } }
+            `${HOST}/newFeeds?pageSize=${pageSize}&page=${newPage}`, { headers: { Authorization: jwt } }
         ).then((response) => {
             let postItems = this.state.posts;
             postItems = postItems.concat(response.data.data);
-            this.setState({ posts: postItems });
+            this.setState({ posts: postItems, pageSize: pageSize, page:newPage});
         }, (error) => {
             alert(`Error: ${error.response.data.errorMessage}`);
         });
@@ -85,10 +84,10 @@ class Feed extends Component {
         const { portraitUrl, jwt, userId } = this.props;
         return (
             <FeedContainer>
-                <div className="col-8">
+                <div className="col-12 col-md-8">
                     <NewPost portraitUrl={portraitUrl} onClickPost={this.onClickPost}></NewPost>
                 </div>
-                <div className="col-8">
+                <div className="col-12 col-md-8">
                     {
                         posts.map((post, index) => {
                             return <Post key={index} item={post} jwt={jwt} currentUserId={userId} currentUserPortraitUrl={portraitUrl} />

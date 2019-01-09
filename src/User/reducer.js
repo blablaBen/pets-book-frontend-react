@@ -34,7 +34,8 @@ export default (state= initialState, action) => {
                 isUserDataFulfield: true,
                 fulfilledUserData : action.fulfilledUserData
             }
+        
         default:
-            return initialState;
+            return state;
     }
 }
