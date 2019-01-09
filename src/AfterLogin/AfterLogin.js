@@ -22,7 +22,7 @@ import Feed from '../Feed/Feed';
 const Container = styled.div.attrs({
     className: "container"
 })`
-
+    margin-top: 70px;
 `
 const NavbarStye = {
     backgroundColor: '#cf142b'
@@ -48,7 +48,7 @@ class AfterLogin extends Component {
     render() {
         return (
             <div>
-                <Navbar style={NavbarStye} expand="md" fixed="top">
+                <Navbar style={NavbarStye}  expand="md" fixed="top">
                     <NavbarBrand href="/">PetsBook</NavbarBrand>
                     <NavbarToggler onClick={this.toggle} />
                     <Collapse isOpen={this.state.isOpen} navbar>
