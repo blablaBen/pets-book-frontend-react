@@ -27,7 +27,7 @@ class AddNewComponent extends Component {
     }
 
     onClickAddComment() {
-        this.props.onClickAddComment(this.state.commentText);
+        this.props.a(this.state.commentText);
         this.setState({commentText: ''});
     }
 

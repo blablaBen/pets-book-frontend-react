@@ -8,7 +8,7 @@ import Login from './Login/Login'
 import AfterLogin from './AfterLogin/AfterLogin'
 import PrivateRoute  from './Components/PrivateRoute';
 
-class App extends Component {
+export class App extends Component {
   render() {
     const {isLoggedIn} = this.props;
     return (
