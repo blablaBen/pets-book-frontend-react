@@ -24,6 +24,9 @@ const Container = styled.div.attrs({
 })`
 
 `
+const NavbarStye = {
+    backgroundColor: '#cf142b'
+};
 
 
 class AfterLogin extends Component {
@@ -45,7 +48,7 @@ class AfterLogin extends Component {
     render() {
         return (
             <div>
-                <Navbar color="light" light expand="md">
+                <Navbar style={NavbarStye} expand="md" fixed="top">
                     <NavbarBrand href="/">PetsBook</NavbarBrand>
                     <NavbarToggler onClick={this.toggle} />
                     <Collapse isOpen={this.state.isOpen} navbar>
