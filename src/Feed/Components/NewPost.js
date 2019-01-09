@@ -3,14 +3,8 @@ import styled from 'styled-components';
 import PostContainer from './PostContainer';
 import { Button } from 'reactstrap';
 import AvatarComponent from './AvatarComponent';
+import PropTypes from 'prop-types';
 import {  Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-
-
-const PostTextArea = styled.textarea.attrs({
-    className: "col-12"
-})`
-    border: 1px solid rgb(224, 220, 220);
-`
 
 const PostTextAreaStyle = {
     border: '0px solid rgb(224, 220, 220)'
@@ -24,7 +18,7 @@ const UpperContainer = styled.div.attrs({
     padding-bottom: 15px;
 `;
 
-export default class NewPost extends Component {
+class NewPost extends Component {
 
     constructor(props) {
         super(props);
@@ -44,7 +38,7 @@ export default class NewPost extends Component {
     onPost = () => {
         const {textArea, pictureUrls} = this.state;
         const {onClickPost} = this.props;
-        let validPictureUrls = pictureUrls.filter((value) => value != "");
+        let validPictureUrls = pictureUrls.filter((value) => value !== "");
         onClickPost(textArea, validPictureUrls);
         this.setState({textArea: "", pictureUrls: ["", "", ""]});
     }
@@ -62,7 +56,7 @@ export default class NewPost extends Component {
     }
 
     render() {
-        const { onClickSubmit, portraitUrl } = this.props;
+        const { portraitUrl } = this.props;
         const {textArea} = this.state;
         const url0 = this.state.pictureUrls[0];
         const url1 = this.state.pictureUrls[1];
@@ -132,3 +126,10 @@ export default class NewPost extends Component {
     }
 }
 
+
+NewPost.PropTypes = {
+    portraitUrl: PropTypes.string.isRequired,
+    onClickPost: PropTypes.func.isRequired
+}
+
+export default NewPost;

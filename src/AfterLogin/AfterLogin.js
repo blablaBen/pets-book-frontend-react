@@ -15,7 +15,6 @@ import {
 } from 'reactstrap';
 import {FEED_URL, INTEREST_URL, ASK_URL, INBOX_URL, PROFILE_URL} from "../Const/URLConstant";
 import {Switch, Redirect} from 'react-router-dom';
-import PrivateRoute from '../Components/PrivateRoute';
 import styled from 'styled-components';
 import Feed from '../Feed/Feed';
 

@@ -29,16 +29,12 @@ const ImgComponent = ({ url }) => {
 
 const ShowCommentsButtonContainerStyle = {
     padding: "5px",
-    padding: "5px",
     textAlign: "center",
     textDecoration: "underline",
     color: "#c54057",
     fontSize: "0.8rem",
     cursor: "pointer"
 }
-
-
-
 
 const AvatarContainerStyle = {
     padding: "5px",
@@ -105,13 +101,11 @@ class Post extends Component {
     }
 
     render() {
-        const { currentUserPortraitUrl, jwt } = this.props;
+        const {  jwt } = this.props;
         const { userId, textValue, pictures, commentCount } = this.props.item;
-        const { portraitUrl, profileName, isShowingComment, comments, commentText } = this.state;
+        const { portraitUrl, profileName, isShowingComment, comments } = this.state;
 
-        if (portraitUrl == "") {
-            const { userId } = this.props.item;
-            const { jwt } = this.props;
+        if (portraitUrl === "") {
             this.fetchUserData(userId, jwt).then((response) => {
                 if (response.data.data != null) {
                     this.setState({ portraitUrl: response.data.data.portraitUrl });
