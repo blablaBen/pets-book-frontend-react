@@ -5,3 +5,7 @@ nav .nav-item {
 nav a {
     color: white;
 }
+
+nav a:hover {
+    color: white;
+}

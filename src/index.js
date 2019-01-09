@@ -10,10 +10,28 @@ import { Provider } from "react-redux";
 import { createStore, applyMiddleware, compose } from "redux";
 import promiseMiddleWare from "redux-promise-middleware";
 import rootReducer from './rootReducer';
+import auth from './User/auth';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const getUserInformationFromSessionStorage = () => {
+  if(sessionStorage.getItem('jwt')) {
+    auth.isLoggedIn = true;
+    return {
+      isLoggedIn: true,
+      isUserDataFulfield: true, 
+      jwt: sessionStorage.getItem('jwt'),
+      userData: {
+        username: sessionStorage.getItem('username')
+      },
+      fulfilledUserData: sessionStorage.getItem('fulfilledUserData')
+    }
+  }
+
+  return undefined;
+};
 const store = createStore(
   rootReducer,
+  getUserInformationFromSessionStorage(),
   composeEnhancers(applyMiddleware(promiseMiddleWare()))
 );
 

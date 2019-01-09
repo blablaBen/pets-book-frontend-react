@@ -13,6 +13,10 @@ export default (state= initialState, action) => {
     switch(action.type) {
         case userConstants.LOGIN_SUCCESS:
             auth.isLoggedIn = true;
+            sessionStorage.setItem('jwt', action.jwt);
+            sessionStorage.setItem('userId', action.userId);
+            sessionStorage.setItem('username', action.username);
+
             return {
                 ...state,
                 isLoggedIn : true,
@@ -24,6 +28,7 @@ export default (state= initialState, action) => {
             };
 
         case userConstants.UPDATE_USER_SUCCESS:
+            sessionStorage.setItem('fulfilledUserData', action.fulfilledUserData);
             return {
                 ...state,
                 isUserDataFulfield: true,

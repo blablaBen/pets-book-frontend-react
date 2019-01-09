@@ -1,8 +1,11 @@
-import { combineReducers } from "redux";
 import login from "./Login/redux";
 import user from "./User/reducer";
 
-export default combineReducers({
-    login: login,
-    user: user
-});
+const combineReducers = (state = {}, action) => {
+    return  {
+        login: login(state.login, action),
+        user: user(state.user, action)
+    }
+}
+
+export default combineReducers;
