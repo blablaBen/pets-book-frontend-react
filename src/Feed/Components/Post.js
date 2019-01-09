@@ -52,7 +52,7 @@ const AvatarContainerStyle = {
 }
 
 const ProfileNameStyle = {
-    padding: "10px"
+    lineHeight: "50px"
 }
 
 class Post extends Component {

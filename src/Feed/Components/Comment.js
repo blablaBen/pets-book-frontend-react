@@ -3,6 +3,7 @@ import axios from 'axios';
 import AvatarComponent from './AvatarComponent';
 import PropTypes from 'prop-types';
 import { HOST } from '../../Const/URLConstant';
+import styled from 'styled-components';
 
 const ComponentStyle = {
     margin: "10px"
@@ -11,6 +12,10 @@ const ComponentStyle = {
 const ProfileNameStyle = {
     color: "#940909"
 }
+
+const CommentAlignCenter = styled.div`
+    line-height: 50px;
+`;
 
 class Comment extends Component {
     constructor(props) {
@@ -55,9 +60,9 @@ class Comment extends Component {
                         <AvatarComponent url={portraitUrl}></AvatarComponent>
                     </div>
                     <div className="col-10">
-                        <div>
-                            <span style={ProfileNameStyle}>{profileName}:</span> {content}
-                        </div>
+                      <CommentAlignCenter>
+                        <span style={ProfileNameStyle}>{profileName}:</span> {content} 
+                       </CommentAlignCenter>
                     </div>
                 </div>
             </div>
